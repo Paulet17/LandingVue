@@ -1,34 +1,30 @@
 <script setup>
-import { ref } from "vue";
+defineProps({
+  value: String
+});
 
-const nombre = ref("");
-const error = ref("");
-
-const validarNombre = (valor) => {
-  nombre.value = valor;
-  if (valor.trim().length < 3) {
-    error.value = "El nombre debe tener mínimo 3 letras";
-  } else {
-    error.value = "";
-  }
-};
+const emit = defineEmits(["update:value"]);
 </script>
 
 <template>
+
   <div class="input-group">
-    <label>Nombre completo</label>
+
+    <label>Nombre</label>
+
     <div class="input-box">
-      <span class="icono-input">
-        <i class="fa-solid fa-user"></i>
-      </span>
+
+      <i class="fas fa-user icono-input"></i>
+
       <input
         type="text"
-        placeholder="Ingresa tu nombre y apellido"
-        :value="nombre"
-        @input="validarNombre($event.target.value)"
-        :class="error ? 'error-input' : ''"
+        :value="value"
+        placeholder="Ingrese su nombre"
+        @input="emit('update:value', $event.target.value)"
       />
+
     </div>
-    <p v-if="error" class="error">{{ error }}</p>
+
   </div>
+
 </template>

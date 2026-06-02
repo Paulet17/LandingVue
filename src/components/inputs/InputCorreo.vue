@@ -1,35 +1,30 @@
 <script setup>
-import { ref } from "vue";
+defineProps({
+  value: String
+});
 
-const correo = ref("");
-const error = ref("");
-
-const validarCorreo = (valor) => {
-  correo.value = valor;
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!regex.test(valor)) {
-    error.value = "Ingresa un correo válido";
-  } else {
-    error.value = "";
-  }
-};
+const emit = defineEmits(["update:value"]);
 </script>
 
 <template>
+
   <div class="input-group">
-    <label>Correo electrónico</label>
+
+    <label>Correo</label>
+
     <div class="input-box">
-      <span class="icono-input">
-        <i class="fa-solid fa-envelope"></i>
-      </span>
+
+      <i class="fas fa-envelope icono-input"></i>
+
       <input
         type="email"
-        placeholder="ejemplo@correo.com"
-        :value="correo"
-        @input="validarCorreo($event.target.value)"
-        :class="error ? 'error-input' : ''"
+        :value="value"
+        placeholder="correo@ejemplo.com"
+        @input="emit('update:value', $event.target.value)"
       />
+
     </div>
-    <p v-if="error" class="error">{{ error }}</p>
+
   </div>
+
 </template>
